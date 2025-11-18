@@ -238,8 +238,8 @@ $images_chambres = [
                     <div class="col-md-6 mb-4 fade-in">
                         <div class="testimonial-card p-4 h-100">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face" 
-                                     alt="Marie D." class="rounded-circle me-3" width="60" height="60">
+                                <img src="" 
+                                     alt="Marie ." class="rounded-circle me-3" width="60" height="60">
                                 <div>
                                     <h5 class="mb-1">Marie D.</h5>
                                     <div class="text-warning">
@@ -261,8 +261,8 @@ $images_chambres = [
                     <div class="col-md-6 mb-4 fade-in">
                         <div class="testimonial-card p-4 h-100">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" 
-                                     alt="Pierre M." class="rounded-circle me-3" width="60" height="60">
+                                <img src="" 
+                                     alt="Jean." class="rounded-circle me-3" width="60" height="60">
                                 <div>
                                     <h5 class="mb-1">Pierre M.</h5>
                                     <div class="text-warning">

@@ -55,3 +55,12 @@ INSERT INTO chambres (type_chambre, description, prix_nuit, capacite, image_url)
 -- Insertion d'un administrateur (mot de passe: admin123)
 INSERT INTO administrateurs (username, password) VALUES
 ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+CREATE TABLE contacts (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    sujet VARCHAR(200) NOT NULL,
+    message TEXT NOT NULL,
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    lu TINYINT(1) DEFAULT 0
+);

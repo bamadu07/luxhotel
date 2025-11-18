@@ -8,6 +8,15 @@ include 'config/database.php';
 $admin_email = "contact@hoteldeluxe.com";
 $site_name = "Hôtel Deluxe";
 
+// Vérifier la structure de la table contacts
+try {
+    $stmt = $pdo->query("DESCRIBE contacts");
+    $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
+} catch (PDOException $e) {
+    // Si la table n'existe pas, on continue sans erreur
+    $columns = [];
+}
+
 // Traitement du formulaire de contact
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = htmlspecialchars(trim($_POST['nom']));
@@ -44,9 +53,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Commencer une transaction
             $pdo->beginTransaction();
             
+            // CORRECTION : Vérifier les colonnes disponibles et adapter la requête
+            $columns_available = ['nom', 'email', 'sujet', 'message'];
+            
+            // Ajouter la colonne de date si elle existe
+            if (in_array('date_creation', $columns)) {
+                $columns_available[] = 'date_creation';
+                $placeholders = '?, ?, ?, ?, NOW()';
+            } else if (in_array('created_at', $columns)) {
+                $columns_available[] = 'created_at';
+                $placeholders = '?, ?, ?, ?, NOW()';
+            } else if (in_array('date_envoi', $columns)) {
+                $columns_available[] = 'date_envoi';
+                $placeholders = '?, ?, ?, ?, NOW()';
+            } else {
+                // Si aucune colonne de date n'existe, ne pas l'inclure
+                $placeholders = '?, ?, ?, ?';
+            }
+            
             // Insérer le message dans la base de données
-            $stmt = $pdo->prepare("INSERT INTO contacts (nom, email, sujet, message, date_creation) VALUES (?, ?, ?, ?, NOW())");
-            $db_success = $stmt->execute([$nom, $email, $sujet, $message]);
+            $sql = "INSERT INTO contacts (" . implode(', ', $columns_available) . ") VALUES ($placeholders)";
+            $stmt = $pdo->prepare($sql);
+            
+            // Préparer les valeurs en fonction des colonnes disponibles
+            $values = [$nom, $email, $sujet, $message];
+            
+            $db_success = $stmt->execute($values);
             
             if ($db_success) {
                 // Préparer et envoyer l'email
